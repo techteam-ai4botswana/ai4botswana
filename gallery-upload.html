@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload Photos · AI4Botswana</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --deep: #030d1a; --navy: #061b35; --blue: #0a4d8c;
+      --teal: #0d9488; --cyan: #22d3ee; --sky: #7dd3fc;
+      --white: #f0f8ff; --muted: #94a3b8; --card: rgba(10,30,60,0.7);
+      --border: rgba(34,211,238,0.15);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif; background: var(--deep);
+      color: var(--white); min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem; position: relative; overflow-x: hidden;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: radial-gradient(circle, rgba(34,211,238,0.1) 1px, transparent 1px);
+      background-size: 36px 36px; pointer-events: none; opacity: 0.4;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+    }
+    .container {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 3rem; max-width: 560px; width: 100%;
+      backdrop-filter: blur(16px); position: relative; z-index: 1;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+    }
+    .logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem;
+      letter-spacing: -0.02em; color: var(--white); text-decoration: none;
+      display: block; margin-bottom: 0.5rem;
+    }
+    .logo span { color: var(--cyan); }
+    .section-label {
+      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--teal); font-weight: 600; margin-bottom: 0.6rem; display: block;
+    }
+    h1 {
+      font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800;
+      letter-spacing: -0.02em; margin-bottom: 0.5rem;
+    }
+    .subtitle { color: var(--muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 2rem; }
+
+    /* Drop zone */
+    .dropzone {
+      border: 2px dashed var(--border); border-radius: 14px;
+      padding: 2.5rem 1.5rem; text-align: center; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s; margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--teal); background: rgba(13,148,136,0.07);
+    }
+    .dropzone input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .dropzone-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+    .dropzone p { font-size: 0.9rem; color: var(--muted); }
+    .dropzone strong { color: var(--cyan); }
+
+    /* Preview */
+    #preview-wrap { display: none; margin-bottom: 1.5rem; text-align: center; }
+    #preview-img {
+      max-width: 100%; max-height: 220px; border-radius: 10px;
+      border: 1px solid var(--border); object-fit: cover;
+    }
+    .preview-name { font-size: 0.78rem; color: var(--muted); margin-top: 0.5rem; }
+
+    /* Form fields */
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.1rem; }
+    label { font-size: 0.82rem; font-weight: 600; color: var(--sky); letter-spacing: 0.03em; }
+    input, select, textarea {
+      background: rgba(10,30,60,0.6); border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.75rem 1rem; color: var(--white);
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s; width: 100%;
+    }
+    input::placeholder, textarea::placeholder { color: var(--muted); }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--teal); box-shadow: 0 0 0 3px rgba(13,148,136,0.15);
+    }
+    select option { background: var(--navy); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      color: var(--white); padding: 0.9rem 2rem; border-radius: 8px;
+      font-weight: 600; font-size: 0.95rem; border: none; cursor: pointer;
+      width: 100%; transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(13,148,136,0.3); font-family: 'DM Sans', sans-serif;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(13,148,136,0.45); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.4rem; color: var(--muted);
+      text-decoration: none; font-size: 0.82rem; margin-bottom: 1.8rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--cyan); }
+
+    .success-box {
+      display: none; background: rgba(13,148,136,0.15); border: 1px solid rgba(13,148,136,0.4);
+      border-radius: 10px; padding: 1.2rem 1.5rem; color: var(--teal);
+      font-weight: 500; text-align: center; margin-top: 1rem;
+    }
+    .error-box {
+      display: none; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3);
+      border-radius: 10px; padding: 1rem 1.2rem; color: #fca5a5;
+      font-size: 0.85rem; margin-top: 1rem;
+    }
+    .spinner { display: none; margin: 0.5rem auto; width: 22px; height: 22px; }
+    .spinner::after {
+      content: ''; display: block; width: 100%; height: 100%;
+      border-radius: 50%; border: 2px solid var(--teal);
+      border-top-color: transparent; animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+<div class="container">
+  <a class="back-link" href="index.html">← Back to AI4Botswana</a>
+  <span class="logo">AI4<span>Botswana</span></span>
+  <span class="section-label">Innovation Over Coffee · March 2025</span>
+  <h1>Share Your Photos 📸</h1>
+  <p class="subtitle">Upload photos from the event. They'll be reviewed and added to the gallery shortly. Thank you for capturing the moment!</p>
+
+  <!-- Drop zone -->
+  <div class="dropzone" id="dropzone">
+    <input type="file" id="photo-file" accept="image/*" onchange="previewFile(this)"/>
+    <div class="dropzone-icon">🖼️</div>
+    <p><strong>Click to choose</strong> or drag & drop a photo here</p>
+    <p style="font-size:0.75rem;margin-top:0.4rem;">JPG, PNG, WEBP · Max 10 MB</p>
+  </div>
+
+  <!-- Preview -->
+  <div id="preview-wrap">
+    <img id="preview-img" src="" alt="Preview"/>
+    <p class="preview-name" id="preview-name"></p>
+  </div>
+
+  <!-- Metadata -->
+  <div class="form-group">
+    <label for="caption">Caption (optional)</label>
+    <input type="text" id="caption" placeholder="e.g. Panel discussion on AI in agriculture"/>
+  </div>
+  <div class="form-group">
+    <label for="category">Category</label>
+    <select id="category">
+      <option value="highlights">Highlights</option>
+      <option value="speakers">Speakers</option>
+      <option value="networking">Networking</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="uploader">Your name (optional)</label>
+    <input type="text" id="uploader" placeholder="e.g. Tumelo"/>
+  </div>
+
+  <button class="btn-primary" id="upload-btn" onclick="submitUpload()">Upload Photo</button>
+  <div class="spinner" id="spinner"></div>
+
+  <div class="success-box" id="success-box">
+    🎉 Photo uploaded! It will appear in the gallery after review. Thank you!
+  </div>
+  <div class="error-box" id="error-box"></div>
+</div>
+
+<script>
+  const dz = document.getElementById('dropzone');
+  dz.addEventListener('dragover',  e => { e.preventDefault(); dz.classList.add('dragover'); });
+  dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
+  dz.addEventListener('drop', e => {
+    e.preventDefault(); dz.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      document.getElementById('photo-file').files; // can't set directly
+      previewFileObject(file);
+      // store file reference for upload
+      window._droppedFile = file;
+    }
+  });
+
+  function previewFile(input) {
+    window._droppedFile = null;
+    const file = input.files[0];
+    if (file) previewFileObject(file);
+  }
+
+  function previewFileObject(file) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('preview-img').src = e.target.result;
+      document.getElementById('preview-name').textContent = file.name;
+      document.getElementById('preview-wrap').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function submitUpload() {
+    const fileInput = document.getElementById('photo-file');
+    const file = window._droppedFile || fileInput.files[0];
+    if (!file) { showError('Please select a photo first.'); return; }
+
+    const formData = new FormData();
+    formData.append('file',     file);
+    formData.append('caption',  document.getElementById('caption').value);
+    formData.append('category', document.getElementById('category').value);
+    formData.append('uploader', document.getElementById('uploader').value);
+
+    setLoading(true);
+    hideMessages();
+
+    try {
+      const res = await fetch('http://localhost:3001/api/gallery/upload', {
+        method: 'POST', body: formData
+      });
+      const data = await res.json();
+      if (res.ok) {
+        document.getElementById('success-box').style.display = 'block';
+        document.getElementById('upload-btn').disabled = true;
+      } else {
+        showError(data.error || 'Upload failed. Please try again.');
+      }
+    } catch (e) {
+      showError('Could not connect to the server. Please make sure gallery-backend.js is running (node gallery-backend.js).');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function setLoading(on) {
+    document.getElementById('spinner').style.display = on ? 'block' : 'none';
+    document.getElementById('upload-btn').disabled = on;
+  }
+  function showError(msg) {
+    const el = document.getElementById('error-box');
+    el.textContent = '⚠️ ' + msg;
+    el.style.display = 'block';
+  }
+  function hideMessages() {
+    document.getElementById('success-box').style.display = 'none';
+    document.getElementById('error-box').style.display   = 'none';
+  }
+</script>
+</body>
+</html>
