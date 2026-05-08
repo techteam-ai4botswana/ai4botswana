@@ -5,97 +5,342 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ai4botswana</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
-    body { background: #f0f6ff; font-family: Arial, sans-serif; color: #1a1a2e; }
-
-    .navbar { background: #003580; }
-    .navbar-brand { color: #fff; font-weight: 700; font-size: 1.4rem; }
-    .nav-link { color: #cce0ff !important; }
-    .nav-link:hover { color: #fff !important; }
-
-    .hero {
-      background: linear-gradient(135deg, #003580, #0057c2);
-      color: #fff; padding: 80px 0; text-align: center;
+    :root {
+      --navy:    #001f5b;
+      --blue:    #0046c8;
+      --sky:     #2d8bfd;
+      --teal:    #00d4c8;
+      --teal-lt: #e6faf9;
+      --light:   #f5f8ff;
+      --white:   #ffffff;
+      --muted:   #64748b;
+      --text:    #0d1b3e;
+      --border:  #e2e9f6;
     }
-    .hero h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 16px; }
-    .hero p  { font-size: 1.1rem; opacity: 0.88; max-width: 600px; margin: 0 auto 28px; }
-    .btn-hero {
-      background: #00c2e0; color: #fff; border: none;
-      padding: 12px 32px; border-radius: 6px; font-size: 1rem; font-weight: 600;
-      text-decoration: none; display: inline-block;
-    }
-    .btn-hero:hover { background: #009bb5; color: #fff; }
-
-    .logo-img {
-      width: 40px; height: 40px; border-radius: 8px;
-      background: rgba(255,255,255,0.15);
-      display: inline-flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; margin-right: 8px; vertical-align: middle;
+    *,*::before,*::after{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      background:var(--white);
+      font-family:'Plus Jakarta Sans',sans-serif;
+      color:var(--text);margin:0;
+      -webkit-font-smoothing:antialiased;
     }
 
-    section { padding: 60px 0; }
-    .section-title { font-size: 1.8rem; font-weight: 700; color: #003580; margin-bottom: 10px; }
-    .section-line  { width: 50px; height: 4px; background: #0057c2; border-radius: 2px; margin-bottom: 30px; }
+   body.dark-mode{
+     --white: #0b1220;
+    --light: #111827;
+    --text: #f3f4f6;
+    --muted: #cbd5e1;
+    --border: #243041;
 
-    .about-card {
-      background: #fff; border-radius: 10px; padding: 28px;
-      box-shadow: 0 2px 12px rgba(0,53,128,0.08); height: 100%;
+    background:#0b1220;
+    color:#f3f4f6;
+  }
+
+    /* NAVBAR */
+    .navbar{
+      background:var(--white);
+      border-bottom:1px solid var(--border);
+      padding:16px 0;position:sticky;top:0;z-index:1000;
     }
-    .about-card h5 { font-weight: 700; color: #003580; }
-    .about-card p  { color: #555; font-size: 0.9rem; }
-
-    .event-item {
-      background: #fff; border-radius: 10px; padding: 24px 28px;
-      box-shadow: 0 2px 12px rgba(0,53,128,0.08);
-      margin-bottom: 16px; border-left: 5px solid #0057c2;
+    .navbar-brand{
+      font-weight:800;font-size:1.18rem;
+      color:var(--navy);letter-spacing:-0.3px;
+      display:flex;align-items:center;gap:8px;
     }
-    .event-item.past { border-left-color: #aaa; opacity: 0.7; }
-    .badge-upcoming { background: #0057c2; color: #fff; font-size: 0.72rem; padding: 3px 10px; border-radius: 99px; }
-    .badge-past     { background: #aaa; color: #fff; font-size: 0.72rem; padding: 3px 10px; border-radius: 99px; }
-    .event-item h5  { font-weight: 700; margin: 8px 0 6px; color: #003580; }
-    .event-item p   { color: #555; font-size: 0.88rem; margin: 0 0 8px; }
-    .event-meta     { font-size: 0.8rem; color: #888; }
-
-    #learn { background: #e8f2ff; }
-
-    .reg-box {
-      background: #fff; border-radius: 12px; padding: 40px;
-      box-shadow: 0 2px 20px rgba(0,53,128,0.1);
-      max-width: 700px; margin: 0 auto;
+    .brand-dot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--teal);display:inline-block;
+      animation:blink 2s ease-in-out infinite;
     }
-    .form-label { font-weight: 600; font-size: 0.85rem; color: #444; }
-    .form-control:focus, .form-select:focus { border-color: #0057c2; box-shadow: 0 0 0 3px rgba(0,87,194,0.12); }
-    .btn-submit {
-      background: #0057c2; color: #fff; border: none;
-      padding: 12px 40px; border-radius: 6px; font-size: 1rem;
-      font-weight: 600; width: 100%; cursor: pointer;
+    @keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(0,212,200,0.5);}50%{box-shadow:0 0 0 5px rgba(0,212,200,0);}}
+    .nav-link{
+      color:var(--muted)!important;font-weight:500;font-size:0.875rem;
+      padding:6px 14px!important;border-radius:6px;transition:all 0.18s;
     }
-    .btn-submit:hover { background: #003580; }
-
-    .contact-card {
-      background: #fff; border-radius: 10px; padding: 28px 24px;
-      box-shadow: 0 2px 12px rgba(0,53,128,0.08);
-      text-align: center; text-decoration: none; color: inherit;
-      display: flex; flex-direction: column; align-items: center;
-      transition: box-shadow 0.2s, transform 0.2s;
+    .nav-link:hover{color:var(--navy)!important;background:var(--light);}
+    .btn-nav{
+      background:var(--blue);color:#fff!important;
+      font-weight:700!important;border-radius:8px;
+      padding:8px 20px!important;transition:all 0.2s;
     }
-    .contact-card:hover { box-shadow: 0 6px 28px rgba(0,53,128,0.18); transform: translateY(-2px); color: #003580; }
-    .contact-card .social-icon { width: 52px; height: 52px; margin-bottom: 12px; }
-    .contact-card h6 { font-weight: 700; color: #003580; margin-bottom: 4px; }
-    .contact-card p  { color: #555; font-size: 0.85rem; margin: 0; }
 
-    footer { background: #003580; color: #cce0ff; padding: 30px 0; text-align: center; font-size: 0.85rem; }
-    footer a { color: #cce0ff; text-decoration: none; margin: 0 10px; }
-    footer a:hover { color: #fff; }
-
-    .toast-msg {
-      position: fixed; bottom: 24px; right: 24px;
-      background: #003580; color: #fff;
-      padding: 14px 22px; border-radius: 8px;
-      font-size: 0.9rem; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      display: none; z-index: 9999;
+    /* HERO */
+    .hero{background:var(--white);padding:80px 0 70px;position:relative;overflow:hidden;}
+    .hero-blob{
+      position:absolute;right:-100px;top:-60px;
+      width:500px;height:500px;
+      background:radial-gradient(ellipse at 60% 40%,rgba(0,212,200,0.13) 0%,rgba(45,139,253,0.08) 50%,transparent 72%);
+      border-radius:50%;pointer-events:none;
     }
-    .toast-msg.show { display: block; }
+    .hero .container{position:relative;}
+    .hero-tag{
+      display:inline-flex;align-items:center;gap:6px;
+      background:var(--teal-lt);border:1px solid rgba(0,212,200,0.4);
+      color:#007a74;font-size:0.74rem;font-weight:700;
+      letter-spacing:0.8px;text-transform:uppercase;
+      padding:5px 14px;border-radius:99px;margin-bottom:22px;
+    }
+    .hero h1{
+      font-size:clamp(2rem,4.5vw,3rem);font-weight:800;
+      line-height:1.2;letter-spacing:-0.8px;
+      color:var(--navy);margin-bottom:18px;
+    }
+    .hero h1 em{font-style:normal;color:var(--blue);}
+    .hero-sub{
+      color:var(--muted);font-size:1rem;line-height:1.75;
+      max-width:480px;margin-bottom:34px;
+    }
+    .hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px;}
+    .btn-solid{
+      background:var(--blue);color:#fff;border:none;
+      padding:13px 28px;border-radius:9px;font-weight:700;font-size:0.9rem;
+      text-decoration:none;display:inline-block;transition:all 0.2s;
+    }
+    .btn-solid:hover{background:var(--navy);color:#fff;transform:translateY(-1px);box-shadow:0 8px 22px rgba(0,70,200,0.25);}
+    .btn-ghost{
+      background:transparent;color:var(--navy);
+      border:1.5px solid var(--border);
+      padding:12px 26px;border-radius:9px;
+      font-weight:600;font-size:0.9rem;
+      text-decoration:none;display:inline-block;transition:all 0.2s;
+    }
+    .btn-ghost:hover{border-color:var(--blue);color:var(--blue);}
+    .hero-checks{display:flex;gap:18px;flex-wrap:wrap;}
+    .hcheck{display:flex;align-items:center;gap:7px;font-size:0.82rem;color:var(--muted);}
+    .hcheck-icon{color:var(--teal);font-size:0.95rem;}
+
+    /* Hero right panel */
+    .hero-panel{
+      background:linear-gradient(135deg,var(--navy) 0%,#002d99 100%);
+      border-radius:20px;padding:36px 30px;color:#fff;
+      position:relative;overflow:hidden;
+    }
+    .hero-panel::before{
+      content:'';position:absolute;inset:0;
+      background:
+        radial-gradient(ellipse 280px 180px at 85% 15%,rgba(0,212,200,0.2) 0%,transparent 65%),
+        linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);
+      background-size:auto,36px 36px,36px 36px;
+    }
+    .hero-panel>*{position:relative;}
+    .hp-label{font-size:0.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:12px;}
+    .hp-title{font-size:1.1rem;font-weight:800;line-height:1.4;margin-bottom:22px;}
+    .hp-stats{display:flex;gap:14px;}
+    .hp-stat{
+      flex:1;background:rgba(255,255,255,0.09);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:10px;padding:14px 16px;
+    }
+    .hp-stat-n{font-size:1.5rem;font-weight:800;color:var(--teal);line-height:1;}
+    .hp-stat-l{font-size:0.68rem;opacity:0.6;margin-top:3px;}
+    .hp-float{
+      background:#fff;border-radius:12px;padding:14px 16px;
+      box-shadow:0 8px 28px rgba(0,0,0,0.18);
+      position:absolute;bottom:-20px;right:-14px;
+      min-width:175px;border:1px solid var(--border);
+    }
+    .hp-float-l{font-size:0.66rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+    .hp-float-n{font-weight:700;font-size:0.85rem;color:var(--navy);}
+    .hp-float-tag{
+      display:inline-block;background:var(--teal-lt);
+      color:#007a74;font-size:0.66rem;font-weight:700;
+      padding:2px 8px;border-radius:4px;margin-top:4px;
+    }
+
+    /* Stats strip */
+    .stats-strip{
+      background:var(--light);
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      padding:30px 0;
+    }
+    .ss-inner{display:flex;justify-content:center;flex-wrap:wrap;}
+    .ss-item{
+      text-align:center;padding:0 40px;
+      border-right:1px solid var(--border);
+    }
+    .ss-item:last-child{border-right:none;}
+    @media(max-width:576px){.ss-item{padding:12px 20px;border-right:none;border-bottom:1px solid var(--border);}
+    .ss-item:last-child{border-bottom:none;}}
+    .ss-num{font-size:1.65rem;font-weight:800;color:var(--navy);line-height:1;}
+    .ss-lbl{font-size:0.76rem;color:var(--muted);margin-top:3px;}
+
+    /* SECTIONS */
+    section{padding:80px 0;}
+    .eyebrow{font-size:0.7rem;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--blue);margin-bottom:10px;}
+    .sec-title{font-size:clamp(1.55rem,3vw,2.1rem);font-weight:800;color:var(--navy);letter-spacing:-0.5px;margin-bottom:14px;line-height:1.25;}
+    .sec-sub{color:var(--muted);font-size:0.95rem;line-height:1.75;max-width:520px;margin-bottom:44px;}
+    .dline{width:36px;height:3px;background:linear-gradient(90deg,var(--blue),var(--teal));border-radius:99px;margin-bottom:28px;}
+
+    /* ABOUT */
+    #about{background:var(--white);}
+    .feat-card{
+      border:1px solid var(--border);border-radius:16px;
+      padding:28px 24px;height:100%;background:var(--white);
+      transition:all 0.25s;
+    }
+    .feat-card:hover{border-color:rgba(0,70,200,0.22);box-shadow:0 8px 28px rgba(0,31,91,0.09);transform:translateY(-3px);}
+    .ficon{
+      width:44px;height:44px;border-radius:11px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.25rem;margin-bottom:16px;
+    }
+    .fi-blue{background:rgba(0,70,200,0.08);}
+    .fi-teal{background:rgba(0,212,200,0.12);}
+    .fi-sky{background:rgba(45,139,253,0.1);}
+    .feat-card h5{font-weight:700;font-size:0.95rem;color:var(--navy);margin-bottom:7px;}
+    .feat-card p{color:var(--muted);font-size:0.86rem;line-height:1.7;margin:0;}
+    .about-body{color:var(--muted);font-size:0.95rem;line-height:1.8;margin-bottom:20px;}
+    .achk{display:flex;align-items:flex-start;gap:9px;margin-bottom:9px;font-size:0.87rem;color:var(--text);}
+    .achk-dot{
+      width:20px;height:20px;border-radius:50%;
+      background:var(--teal-lt);border:1px solid rgba(0,212,200,0.5);
+      display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;font-size:0.58rem;color:#007a74;margin-top:1px;
+    }
+
+    /* EVENTS */
+    #events{background:var(--light);}
+    .grp-label{
+      font-size:0.68rem;font-weight:700;letter-spacing:1.5px;
+      text-transform:uppercase;color:var(--muted);
+      display:flex;align-items:center;gap:10px;
+      margin-bottom:12px;
+    }
+    .grp-label::after{content:'';flex:1;height:1px;background:var(--border);}
+    .ev-card{
+      background:var(--white);border:1px solid var(--border);
+      border-radius:16px;padding:22px 24px;
+      display:flex;gap:18px;align-items:flex-start;
+      transition:all 0.25s;margin-bottom:12px;
+    }
+    .ev-card:hover{border-color:rgba(0,70,200,0.18);box-shadow:0 6px 24px rgba(0,31,91,0.09);}
+    .ev-card.past{opacity:0.58;}
+    .ev-card.past:hover{opacity:0.8;}
+    .ev-datepill{
+      background:linear-gradient(135deg,var(--blue),var(--sky));
+      border-radius:10px;min-width:50px;padding:9px 7px;
+      text-align:center;color:#fff;flex-shrink:0;
+    }
+    .ev-card.past .ev-datepill{background:#c5cfe0;}
+    .eday{font-size:1.35rem;font-weight:800;line-height:1;}
+    .emon{font-size:0.58rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:0.8;margin-top:2px;}
+    .ebadge{
+      display:inline-block;font-size:0.64rem;font-weight:700;
+      letter-spacing:0.7px;text-transform:uppercase;
+      padding:3px 10px;border-radius:99px;margin-bottom:6px;
+    }
+    .eb-past{background:#f0f2f7;color:var(--muted);}
+    .eb-tba{background:var(--teal-lt);color:#007a74;}
+    .ev-card h5{font-weight:700;font-size:0.95rem;color:var(--navy);margin:0 0 5px;}
+    .ev-card p{color:var(--muted);font-size:0.84rem;line-height:1.65;margin:0 0 9px;}
+    .ev-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:0.74rem;color:#94a3b8;}
+
+    /* LEARN */
+    #learn{background:var(--white);}
+    .learn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:13px;}
+    .lcard{
+      border:1px solid var(--border);border-radius:14px;
+      padding:22px 18px;text-decoration:none;color:var(--text);
+      transition:all 0.25s;display:flex;flex-direction:column;gap:7px;
+      background:var(--white);
+    }
+    .lcard:hover{border-color:var(--blue);box-shadow:0 6px 22px rgba(0,31,91,0.09);transform:translateY(-3px);color:var(--text);}
+    .lc-ico{font-size:1.4rem;}
+    .lc-name{font-weight:700;font-size:0.88rem;color:var(--navy);}
+    .lc-desc{font-size:0.77rem;color:var(--muted);line-height:1.55;flex:1;}
+    .lc-link{font-size:0.76rem;color:var(--blue);font-weight:600;margin-top:auto;}
+
+    /* REGISTER */
+    #register{background:var(--light);}
+    .reg-box{
+      background:var(--white);border:1px solid var(--border);
+      border-radius:20px;padding:46px 42px;max-width:780px;margin:0 auto;
+    }
+    @media(max-width:576px){.reg-box{padding:26px 16px;}}
+    .fgt{
+      font-size:0.67rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+      color:var(--blue);padding-top:18px;margin-bottom:14px;
+      border-top:1px solid var(--border);
+    }
+    .fgt:first-child{border-top:none;padding-top:0;}
+    .form-label{font-weight:600;font-size:0.78rem;color:var(--navy);margin-bottom:5px;}
+    .form-control,.form-select{
+      border:1.5px solid var(--border);border-radius:9px;
+      padding:11px 13px;font-size:0.88rem;color:var(--text);
+      background:var(--white);transition:all 0.2s;
+    }
+    .form-control:focus,.form-select:focus{
+      border-color:var(--blue);
+      box-shadow:0 0 0 3px rgba(0,70,200,0.1);outline:none;
+    }
+    .form-control::placeholder{color:#b8c5d6;}
+    .btn-submit{
+      background:var(--blue);color:#fff;border:none;
+      padding:14px;border-radius:10px;
+      font-family:'Plus Jakarta Sans',sans-serif;
+      font-size:0.92rem;font-weight:700;
+      width:100%;cursor:pointer;transition:all 0.25s;
+    }
+    .btn-submit:hover{background:var(--navy);box-shadow:0 8px 26px rgba(0,70,200,0.27);transform:translateY(-1px);}
+
+    /* CONTACT */
+    #contact{background:var(--white);}
+    .social-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+    @media(max-width:768px){.social-grid{grid-template-columns:repeat(3,1fr);}}
+    @media(max-width:480px){.social-grid{grid-template-columns:repeat(2,1fr);}}
+    .scard{
+      border:1px solid var(--border);border-radius:14px;
+      padding:20px 12px;text-align:center;text-decoration:none;
+      color:var(--text);display:flex;flex-direction:column;
+      align-items:center;gap:7px;background:var(--white);transition:all 0.25s;
+    }
+    .scard:hover{border-color:rgba(0,70,200,0.22);box-shadow:0 6px 22px rgba(0,31,91,0.09);transform:translateY(-3px);color:var(--navy);}
+    .scard h6{font-weight:700;font-size:0.83rem;color:var(--navy);margin:0;}
+    .scard p{color:var(--muted);font-size:0.74rem;margin:0;}
+    .social-icon{width:46px;height:46px;}
+
+    /* CTA BAND */
+    .cta-band{
+      background:linear-gradient(135deg,var(--navy) 0%,#003399 100%);
+      padding:72px 0;text-align:center;position:relative;overflow:hidden;
+    }
+    .cta-band::before{
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse 600px 280px at 50% 50%,rgba(0,212,200,0.12) 0%,transparent 65%);
+    }
+    .cta-band .container{position:relative;}
+    .cta-band h2{font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:800;color:#fff;letter-spacing:-0.5px;margin-bottom:12px;}
+    .cta-band p{color:rgba(255,255,255,0.6);font-size:0.98rem;margin-bottom:30px;}
+    .btn-white{
+      background:#fff;color:var(--navy);border:none;
+      padding:14px 34px;border-radius:9px;
+      font-weight:700;font-size:0.9rem;text-decoration:none;
+      display:inline-block;transition:all 0.2s;
+    }
+    .btn-white:hover{background:var(--teal);color:var(--navy);transform:translateY(-2px);box-shadow:0 8px 26px rgba(0,212,200,0.33);}
+
+    /* FOOTER */
+    footer{background:var(--navy);color:rgba(255,255,255,0.42);padding:30px 0;text-align:center;font-size:0.8rem;}
+    .ft-brand{font-weight:800;font-size:1.05rem;color:#fff;margin-bottom:12px;}
+    .ft-brand span{color:var(--teal);}
+    .ft-links{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;}
+    .ft-links a{color:rgba(255,255,255,0.42);text-decoration:none;padding:4px 12px;border-radius:6px;transition:all 0.2s;}
+    .ft-links a:hover{color:#fff;background:rgba(255,255,255,0.08);}
+
+    /* TOAST */
+    .toast-msg{
+      position:fixed;bottom:24px;right:24px;background:var(--navy);color:#fff;
+      padding:15px 22px;border-radius:12px;font-size:0.87rem;font-weight:600;
+      box-shadow:0 8px 28px rgba(0,0,0,0.2);display:none;z-index:9999;
+      border-left:4px solid var(--teal);
+    }
+    .toast-msg.show{display:block;animation:slideUp 0.3s ease;}
+    @keyframes slideUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
   </style>
 </head>
 <body>
@@ -103,20 +348,19 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg">
   <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <span class="logo-img"><img src="ai4botswana logo.jpeg" width="40" height="40" style="border-radius:8px;margin-right:8px"></span>
-      ai4botswana
+    <a class="navbar-brand" href="#">
+      <span class="brand-dot"></span>ai4botswana
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" style="border-color:#cce0ff;">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="nav">
-      <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
         <li class="nav-item"><a class="nav-link" href="#events">Events</a></li>
         <li class="nav-item"><a class="nav-link" href="#learn">Learn</a></li>
-        <li class="nav-item"><a class="nav-link" href="#register">Register</a></li>
         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item ms-2"><a class="nav-link btn-nav" href="#register">Register Startup</a></li>
       </ul>
     </div>
   </div>
@@ -124,36 +368,104 @@
 
 <!-- Hero -->
 <div class="hero">
+  <div class="hero-blob"></div>
   <div class="container">
-    <h1>Powering Botswana with AI</h1>
-    <p>A community-driven initiative empowering individuals and organisations with AI knowledge and tools to solve real challenges in Botswana.</p>
-    <a href="#register" class="btn-hero">Register Your Startup</a>
+    <div class="row align-items-center gy-5">
+      <div class="col-lg-6">
+        <div class="hero-tag">
+          <span style="width:6px;height:6px;background:var(--teal);border-radius:50%;display:inline-block;"></span>
+          Community · Innovation · Botswana
+        </div>
+        <h1>AI knowledge &amp; tools<br><em>built for Botswana</em></h1>
+        <p class="hero-sub">A community-driven initiative empowering individuals and organisations to solve real local challenges using the power of artificial intelligence.</p>
+        <div class="hero-btns">
+          <a href="#register" class="btn-solid">Register Your Startup</a>
+          <a href="#about" class="btn-ghost">Learn More</a>
+        </div>
+        <div class="hero-checks">
+          <span class="hcheck"><span class="hcheck-icon">✓</span>Free to join</span>
+          <span class="hcheck"><span class="hcheck-icon">✓</span>All skill levels</span>
+          <span class="hcheck"><span class="hcheck-icon">✓</span>Botswana-focused</span>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div style="position:relative;padding-bottom:28px;padding-right:18px;">
+          <div class="hero-panel">
+            <div class="hp-label">ai4botswana Initiative</div>
+            <div class="hp-title">Connecting AI talent<br>across Botswana</div>
+            <div class="hp-stats">
+              <div class="hp-stat"><div class="hp-stat-n">1+</div><div class="hp-stat-l">Events Hosted</div></div>
+              <div class="hp-stat"><div class="hp-stat-n">5+</div><div class="hp-stat-l">Cities Reached</div></div>
+              <div class="hp-stat"><div class="hp-stat-n">∞</div><div class="hp-stat-l">Possibilities</div></div>
+            </div>
+          </div>
+          <div class="hp-float">
+            <div class="hp-float-l">Latest Event</div>
+            <div class="hp-float-n">Innovation Over Coffee</div>
+            <span class="hp-float-tag">✓ Completed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Stats Strip -->
+<div class="stats-strip">
+  <div class="container">
+    <div class="ss-inner">
+      <div class="ss-item"><div class="ss-num">Gaborone</div><div class="ss-lbl">Headquartered</div></div>
+      <div class="ss-item"><div class="ss-num">2026</div><div class="ss-lbl">Founded</div></div>
+      <div class="ss-item"><div class="ss-num">AI</div><div class="ss-lbl">Focused</div></div>
+      <div class="ss-item"><div class="ss-num">Open</div><div class="ss-lbl">Community</div></div>
+    </div>
   </div>
 </div>
 
 <!-- About -->
 <section id="about">
   <div class="container">
-    <div class="section-title">About Us</div>
-    <div class="section-line"></div>
-    <p class="mb-4 text-muted">ai4botswana connects AI practitioners, students, researchers, and innovators across Botswana — building an ecosystem for locally-relevant AI solutions.</p>
-    <div class="row g-3">
-      <div class="col-md-3">
-        <div class="about-card">
-          <h5>AI Education</h5>
-          <p>Workshops and bootcamps making AI accessible to everyone.</p>
-        </div>
+    <div class="row gy-5 align-items-start">
+      <div class="col-lg-5">
+        <div class="eyebrow">Who We Are</div>
+        <div class="sec-title">Building Botswana's AI ecosystem</div>
+        <div class="dline"></div>
+        <p class="about-body">ai4botswana connects AI practitioners, students, researchers, and innovators across Botswana — building an ecosystem for locally-relevant AI solutions that address real community needs.</p>
+        <div class="achk"><span class="achk-dot">✓</span>Workshops and bootcamps for every level</div>
+        <div class="achk"><span class="achk-dot">✓</span>Mentorship for AI-driven startups</div>
+        <div class="achk"><span class="achk-dot">✓</span>Growing network of innovators &amp; researchers</div>
+        <div class="achk"><span class="achk-dot">✓</span>Locally-relevant AI problem solving</div>
       </div>
-      <div class="col-md-3">
-        <div class="about-card">
-          <h5>Startup Support</h5>
-          <p>Mentorship and resources for AI-driven startups.</p>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="about-card">
-          <h5>Community</h5>
-          <p>A growing network of innovators and researchers.</p>
+      <div class="col-lg-7">
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <div class="feat-card">
+              <div class="ficon fi-blue">🎓</div>
+              <h5>AI Education</h5>
+              <p>Workshops and bootcamps making AI accessible to everyone, from beginners to advanced practitioners.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="feat-card">
+              <div class="ficon fi-teal">🚀</div>
+              <h5>Startup Support</h5>
+              <p>Mentorship, resources, and community backing for AI-driven startups solving local challenges.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="feat-card">
+              <div class="ficon fi-sky">🤝</div>
+              <h5>Community</h5>
+              <p>A growing network of innovators, researchers, and change-makers united for Botswana's future.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="feat-card">
+              <div class="ficon fi-blue">🌍</div>
+              <h5>Local Focus</h5>
+              <p>Every initiative is designed to address challenges and opportunities specific to Botswana.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -161,25 +473,36 @@
 </section>
 
 <!-- Events -->
-<section id="events" style="background:#fff;">
+<section id="events">
   <div class="container">
-    <div class="section-title">Events</div>
-    <div class="section-line"></div>
-
-    <h6 class="text-muted mb-3">Past Events</h6>
-    <div class="event-item past">
-      <span class="badge-past">Completed</span>
-      <h5>Innovation Over Coffee</h5>
-      <p>An intimate morning session where AI enthusiasts, founders, and students gathered to exchange ideas and spark collaborations over coffee.</p>
-      <div class="event-meta">April 11, 2026 &nbsp;|&nbsp; Ola Tia Gaborone, BW &nbsp;|&nbsp; Community Meetup</div>
+    <div class="row align-items-end mb-5">
+      <div class="col-lg-6">
+        <div class="eyebrow">What's Happening</div>
+        <div class="sec-title" style="margin-bottom:0;">Events &amp; Meetups</div>
+      </div>
+      <div class="col-lg-6">
+        <p class="sec-sub" style="max-width:100%;margin-bottom:0;margin-top:12px;">Follow our channels to be first to hear about upcoming workshops, hackathons, and community meetups.</p>
+      </div>
     </div>
-
-    <h6 class="text-muted mb-3 mt-4">Upcoming Events</h6>
-    <div class="event-item">
-      <span class="badge-upcoming">TBA</span>
-      <h5>TBA</h5>
-      <p>TBA</p>
-      <div class="event-meta">TBA &nbsp;|&nbsp; TBA &nbsp;|&nbsp; TBA</div>
+    <div class="grp-label" style="margin-top:8px;">Past Events</div>
+    <div class="ev-card past">
+      <div class="ev-datepill"><div class="eday">11</div><div class="emon">Apr</div></div>
+      <div>
+        <span class="ebadge eb-past">Completed</span>
+        <h5>Innovation Over Coffee</h5>
+        <p>An intimate morning session where AI enthusiasts, founders, and students gathered to exchange ideas and spark collaborations.</p>
+        <div class="ev-meta"><span>📅 April 11, 2026</span><span>📍 Ola Tia, Gaborone</span><span>🏷 Community Meetup</span></div>
+      </div>
+    </div>
+    <div class="grp-label" style="margin-top:24px;">Upcoming Events</div>
+    <div class="ev-card">
+      <div class="ev-datepill" style="background:linear-gradient(135deg,#00c2e0,var(--teal));"><div class="eday">—</div><div class="emon">TBA</div></div>
+      <div>
+        <span class="ebadge eb-tba">Coming Soon</span>
+        <h5>Next Event — To Be Announced</h5>
+        <p>Stay tuned! Follow our social channels to be the first to know about our next workshop, hackathon, or community meetup.</p>
+        <div class="ev-meta"><span>📅 Date TBA</span><span>📍 Location TBA</span><span>🏷 Type TBA</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -187,20 +510,57 @@
 <!-- Learn -->
 <section id="learn">
   <div class="container">
-    <div class="section-title">Learn</div>
-    <div class="section-line"></div>
-    <p class="mb-4 text-muted">Start learning programming and AI with these free, beginner-friendly platforms.</p>
+    <div class="eyebrow">Free Resources</div>
+    <div class="sec-title">Start Learning AI Today</div>
+    <div class="dline"></div>
+    <p class="sec-sub">Beginner-friendly platforms to kickstart your AI and programming journey — all free.</p>
+    <div class="learn-grid">
+      <a href="https://www.fast.ai" target="_blank" class="lcard">
+        <div class="lc-ico">⚡</div><div class="lc-name">fast.ai</div>
+        <div class="lc-desc">Practical deep learning for coders — no PhD required.</div>
+        <div class="lc-link">Visit →</div>
+      </a>
+      <a href="https://www.kaggle.com/learn" target="_blank" class="lcard">
+        <div class="lc-ico">📊</div><div class="lc-name">Kaggle Learn</div>
+        <div class="lc-desc">Hands-on ML &amp; data science mini-courses.</div>
+        <div class="lc-link">Visit →</div>
+      </a>
+      <a href="https://cs50.harvard.edu/ai/" target="_blank" class="lcard">
+        <div class="lc-ico">🏛</div><div class="lc-name">CS50 AI</div>
+        <div class="lc-desc">Harvard's intro to AI with Python — free &amp; rigorous.</div>
+        <div class="lc-link">Visit →</div>
+      </a>
+      <a href="https://www.coursera.org/learn/machine-learning" target="_blank" class="lcard">
+        <div class="lc-ico">🎓</div><div class="lc-name">Coursera ML</div>
+        <div class="lc-desc">Andrew Ng's foundational machine learning course.</div>
+        <div class="lc-link">Visit →</div>
+      </a>
+      <a href="https://huggingface.co/learn" target="_blank" class="lcard">
+        <div class="lc-ico">🤗</div><div class="lc-name">Hugging Face</div>
+        <div class="lc-desc">NLP &amp; transformer model tutorials for all levels.</div>
+        <div class="lc-link">Visit →</div>
+      </a>
+      <a href="https://www.freecodecamp.org" target="_blank" class="lcard">
+        <div class="lc-ico">💻</div><div class="lc-name">freeCodeCamp</div>
+        <div class="lc-desc">Free coding &amp; Python fundamentals, fully self-paced.</div>
+        <div class="lc-link">Visit →</div>
+      </a>
+    </div>
   </div>
 </section>
 
 <!-- Register -->
-<section id="register" style="background:#fff;">
+<section id="register">
   <div class="container">
-    <div class="section-title">Register Your Startup</div>
-    <div class="section-line"></div>
+    <div class="text-center mb-5">
+      <div class="eyebrow" style="justify-content:center;display:flex;">Join the Ecosystem</div>
+      <div class="sec-title" style="text-align:center;">Register Your Startup</div>
+      <p class="sec-sub" style="margin:0 auto;text-align:center;">Tell us about your AI-driven startup and become part of Botswana's growing innovation community.</p>
+    </div>
     <div class="reg-box">
       <form id="regForm">
         <div class="row g-3">
+          <div class="col-12"><div class="fgt">Startup Information</div></div>
           <div class="col-md-6">
             <label class="form-label">Startup Name *</label>
             <input type="text" class="form-control" placeholder="e.g. AgriSense AI" required/>
@@ -235,6 +595,7 @@
             <label class="form-label">Brief Description *</label>
             <textarea class="form-control" rows="3" placeholder="Describe your startup and how AI is at its core…" required></textarea>
           </div>
+          <div class="col-12"><div class="fgt">Founder Details</div></div>
           <div class="col-md-6">
             <label class="form-label">Founder Name *</label>
             <input type="text" class="form-control" placeholder="Your full name" required/>
@@ -259,7 +620,7 @@
             </select>
           </div>
           <div class="col-12 mt-2">
-            <button type="submit" class="btn-submit">Submit Registration</button>
+            <button type="submit" class="btn-submit">Submit Registration →</button>
           </div>
         </div>
       </form>
@@ -270,91 +631,48 @@
 <!-- Contact -->
 <section id="contact">
   <div class="container">
-    <div class="section-title">Contact Us</div>
-    <div class="section-line"></div>
-    <div class="row g-3 justify-content-center">
-
-      <!-- Instagram -->
-      <div class="col-md-4 col-6">
-        <a href="https://www.instagram.com/ai4bo_tswana?igsh=Mm9zeWNjcDMxZGsy" target="_blank" class="contact-card">
-          <svg class="social-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <radialGradient id="ig" cx="30%" cy="107%" r="130%">
-                <stop offset="0%" stop-color="#ffd676"/>
-                <stop offset="20%" stop-color="#f4a13c"/>
-                <stop offset="45%" stop-color="#e1306c"/>
-                <stop offset="70%" stop-color="#c13584"/>
-                <stop offset="100%" stop-color="#405de6"/>
-              </radialGradient>
-            </defs>
-            <rect width="48" height="48" rx="12" fill="url(#ig)"/>
-            <rect x="13" y="13" width="22" height="22" rx="6.5" stroke="white" stroke-width="2.3"/>
-            <circle cx="24" cy="24" r="5.8" stroke="white" stroke-width="2.3"/>
-            <circle cx="31.2" cy="16.8" r="1.5" fill="white"/>
-          </svg>
-          <h6>Instagram</h6>
-          <p>@ai4botswana</p>
-        </a>
-      </div>
-
-      <!-- TikTok -->
-      <div class="col-md-4 col-6">
-        <a href="https://www.tiktok.com/@ai4botswanaaa?_r=1&_t=ZS-969ws83pwbV" target="_blank" class="contact-card">
-          <svg class="social-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="48" height="48" rx="12" fill="#010101"/>
-            <path d="M29.5 11h-4.8v17.7a4.3 4.3 0 0 1-4.2 3.7 4.3 4.3 0 0 1-4.3-4.3 4.3 4.3 0 0 1 4.3-4.3c.4 0 .8.1 1.2.2V19a9.1 9.1 0 0 0-1.2-.1 9.1 9.1 0 0 0-9.1 9.1 9.1 9.1 0 0 0 9.1 9.1 9.1 9.1 0 0 0 9-9V20.3a12.7 12.7 0 0 0 7.5 2.4V18a8 8 0 0 1-7.5-7z" fill="white"/>
-            <path d="M29.5 11h-4.8v17.7a4.3 4.3 0 0 1-4.2 3.7" fill="none"/>
-          </svg>
-          <h6>TikTok</h6>
-          <p>@ai4botswana</p>
-        </a>
-      </div>
-
-      <!-- WhatsApp -->
-      <div class="col-md-4 col-6">
-        <a href="https://whatsapp.com/channel/0029VbB83wv0rGiSgzylrS3m" target="_blank" class="contact-card">
-          <svg class="social-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="48" height="48" rx="12" fill="#25D366"/>
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 10C16.27 10 10 16.27 10 24c0 2.6.72 5.03 1.97 7.1L10 38l7.18-1.88A13.94 13.94 0 0 0 24 38c7.73 0 14-6.27 14-14S31.73 10 24 10zm-4.3 8.5c-.27-.6-.55-.62-.8-.63H18c-.28 0-.73.1-1.1.5-.38.4-1.45 1.4-1.45 3.43 0 2.02 1.48 3.97 1.68 4.25.2.27 2.86 4.54 7.03 6.18 3.47 1.38 4.17 1.1 4.92 1.03.74-.07 2.4-.98 2.73-1.92.34-.94.34-1.75.24-1.92-.1-.17-.38-.27-.8-.47-.4-.2-2.4-1.18-2.77-1.32-.37-.13-.64-.2-.9.2-.27.4-1.04 1.32-1.27 1.59-.23.27-.47.3-.87.1-.4-.2-1.7-.63-3.23-2-.8-.71-1.34-1.59-1.5-1.99-.15-.4-.02-.62.12-.82l.6-.7c.15-.18.2-.4.3-.67.1-.27.05-.5-.05-.7-.1-.2-.88-2.17-1.23-2.96z" fill="white"/>
-          </svg>
-          <h6>WhatsApp Channel</h6>
-          <p>@ai4botswana</p>
-        </a>
-      </div>
-
-      <!-- Facebook -->
-      <div class="col-md-4 col-6">
-        <a href="https://www.facebook.com/profile.php?id=61579071298040" target="_blank" class="contact-card">
-          <svg class="social-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="48" height="48" rx="12" fill="#1877F2"/>
-            <path d="M27 38V26h4l.6-5H27v-3c0-1.4.4-2.4 2.4-2.4H32v-4.5C31.5 11 30 11 28.2 11 24.3 11 22 13.3 22 17.5V21h-4v5h4v12h5z" fill="white"/>
-          </svg>
-          <h6>Facebook</h6>
-          <p>@ai4botswana</p>
-        </a>
-      </div>
-
-      <!-- LinkedIn -->
-      <div class="col-md-4 col-6">
-        <a href="https://www.linkedin.com/showcase/ai4botswana/" target="_blank" class="contact-card">
-          <svg class="social-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="48" height="48" rx="12" fill="#0A66C2"/>
-            <rect x="12" y="19" width="6" height="17" rx="1" fill="white"/>
-            <circle cx="15" cy="14" r="3.5" fill="white"/>
-            <path d="M22 19h5v2.5C28 19.9 29.8 19 32 19c4.4 0 6 2.8 6 7V36h-6v-9c0-2-.8-3.2-2.6-3.2-1.9 0-3.4 1.3-3.4 3.5V36h-6V19z" fill="white"/>
-          </svg>
-          <h6>LinkedIn</h6>
-          <p>ai4botswana</p>
-        </a>
-      </div>
-
+    <div class="eyebrow">Get In Touch</div>
+    <div class="sec-title">Follow &amp; Connect</div>
+    <div class="dline"></div>
+    <p class="sec-sub">Find us on your favourite platform and join the conversation.</p>
+    <div class="social-grid">
+      <a href="https://www.instagram.com/ai4bo_tswana?igsh=Mm9zeWNjcDMxZGsy" target="_blank" class="scard">
+        <svg class="social-icon" viewBox="0 0 48 48" fill="none"><defs><radialGradient id="ig2" cx="30%" cy="107%" r="130%"><stop offset="0%" stop-color="#ffd676"/><stop offset="20%" stop-color="#f4a13c"/><stop offset="45%" stop-color="#e1306c"/><stop offset="70%" stop-color="#c13584"/><stop offset="100%" stop-color="#405de6"/></radialGradient></defs><rect width="48" height="48" rx="12" fill="url(#ig2)"/><rect x="13" y="13" width="22" height="22" rx="6.5" stroke="white" stroke-width="2.3"/><circle cx="24" cy="24" r="5.8" stroke="white" stroke-width="2.3"/><circle cx="31.2" cy="16.8" r="1.5" fill="white"/></svg>
+        <h6>Instagram</h6><p>@ai4botswana</p>
+      </a>
+      <a href="https://www.tiktok.com/@ai4botswanaaa?_r=1&_t=ZS-969ws83pwbV" target="_blank" class="scard">
+        <svg class="social-icon" viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="12" fill="#010101"/><path d="M29.5 11h-4.8v17.7a4.3 4.3 0 0 1-4.2 3.7 4.3 4.3 0 0 1-4.3-4.3 4.3 4.3 0 0 1 4.3-4.3c.4 0 .8.1 1.2.2V19a9.1 9.1 0 0 0-1.2-.1 9.1 9.1 0 0 0-9.1 9.1 9.1 9.1 0 0 0 9.1 9.1 9.1 9.1 0 0 0 9-9V20.3a12.7 12.7 0 0 0 7.5 2.4V18a8 8 0 0 1-7.5-7z" fill="white"/></svg>
+        <h6>TikTok</h6><p>@ai4botswana</p>
+      </a>
+      <a href="https://whatsapp.com/channel/0029VbB83wv0rGiSgzylrS3m" target="_blank" class="scard">
+        <svg class="social-icon" viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="12" fill="#25D366"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24 10C16.27 10 10 16.27 10 24c0 2.6.72 5.03 1.97 7.1L10 38l7.18-1.88A13.94 13.94 0 0 0 24 38c7.73 0 14-6.27 14-14S31.73 10 24 10zm-4.3 8.5c-.27-.6-.55-.62-.8-.63H18c-.28 0-.73.1-1.1.5-.38.4-1.45 1.4-1.45 3.43 0 2.02 1.48 3.97 1.68 4.25.2.27 2.86 4.54 7.03 6.18 3.47 1.38 4.17 1.1 4.92 1.03.74-.07 2.4-.98 2.73-1.92.34-.94.34-1.75.24-1.92-.1-.17-.38-.27-.8-.47-.4-.2-2.4-1.18-2.77-1.32-.37-.13-.64-.2-.9.2-.27.4-1.04 1.32-1.27 1.59-.23.27-.47.3-.87.1-.4-.2-1.7-.63-3.23-2-.8-.71-1.34-1.59-1.5-1.99-.15-.4-.02-.62.12-.82l.6-.7c.15-.18.2-.4.3-.67.1-.27.05-.5-.05-.7-.1-.2-.88-2.17-1.23-2.96z" fill="white"/></svg>
+        <h6>WhatsApp</h6><p>Channel</p>
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=61579071298040" target="_blank" class="scard">
+        <svg class="social-icon" viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="12" fill="#1877F2"/><path d="M27 38V26h4l.6-5H27v-3c0-1.4.4-2.4 2.4-2.4H32v-4.5C31.5 11 30 11 28.2 11 24.3 11 22 13.3 22 17.5V21h-4v5h4v12h5z" fill="white"/></svg>
+        <h6>Facebook</h6><p>@ai4botswana</p>
+      </a>
+      <a href="https://www.linkedin.com/showcase/ai4botswana/" target="_blank" class="scard">
+        <svg class="social-icon" viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="12" fill="#0A66C2"/><rect x="12" y="19" width="6" height="17" rx="1" fill="white"/><circle cx="15" cy="14" r="3.5" fill="white"/><path d="M22 19h5v2.5C28 19.9 29.8 19 32 19c4.4 0 6 2.8 6 7V36h-6v-9c0-2-.8-3.2-2.6-3.2-1.9 0-3.4 1.3-3.4 3.5V36h-6V19z" fill="white"/></svg>
+        <h6>LinkedIn</h6><p>ai4botswana</p>
+      </a>
     </div>
   </div>
 </section>
 
+<!-- CTA Band -->
+<div class="cta-band">
+  <div class="container">
+    <h2>Ready to build the future of Botswana?</h2>
+    <p>Join the ai4botswana community and connect with AI innovators across the country.</p>
+    <a href="#register" class="btn-white">Register Your Startup →</a>
+  </div>
+</div>
+
 <!-- Footer -->
 <footer>
-  <div class="mb-2">
+  <div class="ft-brand">ai4<span>botswana</span></div>
+  <div class="ft-links">
     <a href="#about">About</a>
     <a href="#events">Events</a>
     <a href="#learn">Learn</a>
@@ -364,8 +682,7 @@
   <div>&copy; 2026 ai4botswana. All rights reserved.</div>
 </footer>
 
-<div class="toast-msg" id="toast">&#x2705; Registration submitted! We'll be in touch soon.</div>
-
+<div class="toast-msg" id="toast">✅ Registration submitted! We'll be in touch soon.</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   document.getElementById('regForm').addEventListener('submit', function(e) {
